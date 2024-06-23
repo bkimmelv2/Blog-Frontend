@@ -1,5 +1,28 @@
-const SinglePost = (props) => {
-    return <h1>Post</h1>
+import { Link, useParams } from "react-router-dom"
+
+const SinglePost = ({ posts }) => {
+    const params = useParams()
+
+    const id = parseInt(params.id)
+    const post = posts.find((post) => post.id === id)
+
+    const div = {
+        textAlign: 'center',
+        border: '3px solid green',
+        width: '80%',
+        margin: '30px auto',
+        padding: '25px',
+    }
+
+    return (
+        <div style={div}>
+            <h1>{post.title}</h1>
+            <h2>{post.body}</h2>
+            <Link to='/'>
+                <button>Return to Homepage</button>
+            </Link>
+        </div>
+    )
 }
 
 export default SinglePost

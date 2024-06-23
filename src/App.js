@@ -7,14 +7,19 @@ import Form from './pages/Form'
 import { useState, useEffect } from 'react'
 
 // import router
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Link } from 'react-router-dom'
 
 function App(props) {
   // STYLE
 
   const h1 = {
     textAlign: 'center',
-    margin: '10px',
+    margin: '30px',
+  }
+
+  const button = {
+    display: 'block',
+    margin: 'auto',
   }
 
   // VARIABLES
@@ -25,6 +30,12 @@ function App(props) {
   // State to hold our posts
   const [posts, setPosts] = useState([])
 
+  // null Blog object
+  const nullBlog = {
+    title: '',
+    body: '',
+  }
+
   // FUNCTIONS
 
   // GET all blog posts from API
@@ -32,6 +43,19 @@ function App(props) {
     const response = await fetch(url)
     const data = await response.json()
     setPosts(data)
+  }
+
+  // POST blog from our form data
+  const addBlog = async (newBlog) => {
+    const response = await fetch(url, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newBlog)
+    })
+
+    getBlogs()
   }
 
   // useEffects
@@ -45,6 +69,7 @@ function App(props) {
   return (
     <div>
       <h1 style={h1}>My Blog</h1>
+      <Link to='/new'><button style={button}>Create New Blog Post</button></Link>
       <Routes>
         <Route
           exact
@@ -57,7 +82,12 @@ function App(props) {
         />
         <Route 
           path='/new'
-          element={<Form />}
+          element=
+            {<Form 
+              initialPost={nullBlog}
+              handleSubmit={addBlog}
+              buttonLabel='Create Post'
+            />}
         />
         <Route 
           path='/edit'

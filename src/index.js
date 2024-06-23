@@ -5,7 +5,7 @@ import App from './App';
 // Import Milligram for Default Styling
 import 'milligram';
 // Import Router
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
