@@ -7,7 +7,7 @@ import Form from './pages/Form'
 import { useState, useEffect } from 'react'
 
 // import router
-import { Route, Routes, Link } from 'react-router-dom'
+import { Route, Routes, Link, useNavigate } from 'react-router-dom'
 
 function App(props) {
   // STYLE
@@ -24,6 +24,9 @@ function App(props) {
 
   // VARIABLES
 
+  // Navigate
+  const navigate = useNavigate()
+
   // API URL
   const url = 'https://hw-blog-api-a5aee8b302ed.herokuapp.com/blog/'
 
@@ -35,6 +38,9 @@ function App(props) {
     title: '',
     body: '',
   }
+
+  // hold the blog post to edit
+  const [targetPost, setTargetPost] = useState(nullBlog)
 
   // FUNCTIONS
 
@@ -53,6 +59,23 @@ function App(props) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newBlog)
+    })
+
+    getBlogs()
+  }
+
+  const getTargetPost = (post) => {
+    setTargetPost(post)
+    navigate('/edit')
+  }
+
+  const updatePost = async (post) => {
+    const response = await fetch(url + post.id + '/', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(post)
     })
 
     getBlogs()
@@ -78,20 +101,27 @@ function App(props) {
         />
         <Route 
           path='/post/:id'
-          element={<SinglePost posts={posts} />}
+          element={<SinglePost posts={posts} edit={getTargetPost} />}
         />
         <Route 
           path='/new'
-          element=
-            {<Form 
+          element={
+            <Form 
               initialPost={nullBlog}
               handleSubmit={addBlog}
               buttonLabel='Create Post'
-            />}
+            />
+          }
         />
         <Route 
           path='/edit'
-          element={<Form />}
+          element={
+            <Form 
+              initialPost={targetPost}
+              handleSubmit={updatePost}
+              buttonLabel='Update Post'
+            />
+          }
         />
       </Routes>
     </div>

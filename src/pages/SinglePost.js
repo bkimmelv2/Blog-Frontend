@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom"
 
-const SinglePost = ({ posts }) => {
+const SinglePost = ({ posts, edit }) => {
     const params = useParams()
 
     const id = parseInt(params.id)
@@ -18,6 +18,7 @@ const SinglePost = ({ posts }) => {
         <div style={div}>
             <h1>{post.title}</h1>
             <h2>{post.body}</h2>
+            <button onClick={(e) => edit(post)}>Edit</button>
             <Link to='/'>
                 <button>Return to Homepage</button>
             </Link>
