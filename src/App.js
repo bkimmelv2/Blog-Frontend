@@ -53,7 +53,7 @@ function App(props) {
 
   // POST blog from our form data
   const addBlog = async (newBlog) => {
-    const response = await fetch(url, {
+    await fetch(url, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ function App(props) {
   }
 
   const updatePost = async (post) => {
-    const response = await fetch(url + post.id + '/', {
+    await fetch(url + post.id + '/', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ function App(props) {
   }
 
   const deletePost = async (post) => {
-    const response = await fetch(url + post.id + '/', {
+    await fetch(url + post.id + '/', {
       method: 'delete',
     })
 
