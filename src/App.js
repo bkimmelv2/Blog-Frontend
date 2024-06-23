@@ -95,7 +95,7 @@ function App(props) {
   // show the list when page loads
   useEffect(() => {
     getBlogs()
-  }, [])
+  })
 
   // Returned JSX
   return (
