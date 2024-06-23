@@ -28,7 +28,7 @@ function App(props) {
   const navigate = useNavigate()
 
   // API URL
-  const url = 'https://hw-blog-api-a5aee8b302ed.herokuapp.com/blog/'
+  const url = process.env.REACT_APP_BACKEND_URL
 
   // State to hold our posts
   const [posts, setPosts] = useState([])
@@ -81,6 +81,15 @@ function App(props) {
     getBlogs()
   }
 
+  const deletePost = async (post) => {
+    const response = await fetch(url + post.id + '/', {
+      method: 'delete',
+    })
+
+    getBlogs()
+    navigate('/')
+  }
+
   // useEffects
 
   // show the list when page loads
@@ -101,7 +110,7 @@ function App(props) {
         />
         <Route 
           path='/post/:id'
-          element={<SinglePost posts={posts} edit={getTargetPost} />}
+          element={<SinglePost posts={posts} edit={getTargetPost} deletePost={deletePost} />}
         />
         <Route 
           path='/new'
